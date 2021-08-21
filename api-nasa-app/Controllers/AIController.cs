@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DATA_L.AI;
 using Newtonsoft.Json;
+using System.Web;
 
 namespace api_nasa_app.Controllers
 {
@@ -60,5 +61,16 @@ namespace api_nasa_app.Controllers
 
         }
 
+        /*
+        [HttpPost]
+        [Route("ParseURL")]
+        public string ParseURL(string imgUrl)
+        {
+            // Parses the query string as a NameValueCollection:
+            var queryParams = HttpUtility.UrlEncode(imgUrl);
+
+            return queryParams.ToString();
+        }
+        */
     }
 }

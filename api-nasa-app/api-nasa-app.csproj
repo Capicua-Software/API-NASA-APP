@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>api_nasa_app</RootNamespace>
+    <UserSecretsId>c56751ea-859f-4344-823e-c0b011ac90a2</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

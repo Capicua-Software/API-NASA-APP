@@ -13,12 +13,13 @@ namespace api_nasa_app.Controllers
     [ApiController]
     public class AIController : ControllerBase
     {
-        private SignsDetection dataL = new SignsDetection();
 
         [HttpPost]
-        public async Task<ContentResult> DetectSign(string imgUrl)
+        [Route("VerifyFace")]
+        public async Task<ContentResult> VerifyFace(string imgUrl1, string imgUrl2)
         {
-            var data = await dataL.DetectSign(imgUrl);
+            FaceDetection FaceDataL = new FaceDetection();
+            var data = await FaceDataL.VerifyFace(imgUrl1, imgUrl2);
 
             string JsonData = JsonConvert.SerializeObject(data);
 
@@ -27,5 +28,37 @@ namespace api_nasa_app.Controllers
             return new ContentResult { Content = JsonData, ContentType = "application/json" };
 
         }
+
+
+        [HttpPost]
+        public async Task<ContentResult> DetectSign(string imgUrl)
+        {
+            SignsDetection SignsDataL = new SignsDetection();
+            var data = await SignsDataL.DetectSign(imgUrl);
+
+            string JsonData = JsonConvert.SerializeObject(data);
+
+            JsonData.Replace(@"\", " ");
+
+            return new ContentResult { Content = JsonData, ContentType = "application/json" };
+
+        }
+
+
+        [HttpPost]
+        [Route("GetFaceId")]
+        public async Task<ContentResult> GetFaceId(string imgUrl)
+        {
+            FaceDetection FaceDataL = new FaceDetection();
+            var data = await FaceDataL.GetFaceId(imgUrl);
+
+            string JsonData = JsonConvert.SerializeObject(data);
+
+            JsonData.Replace(@"\", " ");
+
+            return new ContentResult { Content = JsonData, ContentType = "application/json" };
+
+        }
+
     }
 }

@@ -19,7 +19,7 @@ namespace DATA_L.AI
     public class SignsDetection
     {
         private static string apiUrl = "https://nasaapp-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/eedf237b-71eb-4d46-a128-bf813f8687ed/classify/iterations/Iteration3/url";
-        public static SignsDetectionModel DetectSign(string imgUrl)
+        public async Task<SignsDetectionModel> DetectSign(string imgUrl)
         {
             var responseBody = string.Empty;
             var request = (HttpWebRequest)WebRequest.Create(apiUrl);

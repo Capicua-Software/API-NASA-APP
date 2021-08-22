@@ -1,4 +1,5 @@
-﻿using DATA_L.Models.Users;
+﻿using DATA_L.Models.User;
+using DATA_L.Models.Users;
 using Firebase.Auth;
 
 using Google.Cloud.Firestore;
@@ -11,6 +12,9 @@ namespace DATA_L.User
 {
     public class UserD:FirebaseCore
     {
+        public FirebaseAuthProvider auth { get; set; }
+        public FirebaseAuthLink a { get; set; }
+
         public async Task<UserModel> GetUserInfo(string Email, string Key)
         {
             OpenFirestoreConnection();
@@ -35,16 +39,17 @@ namespace DATA_L.User
         }
 
 
-        public async Task RegisterAsync(UserModel model)
+        public async Task<RegisterUserModel> RegisterAsync(RegisterUserModel model)
         {
-            model.auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-            model.a = await model.auth.CreateUserWithEmailAndPasswordAsync(model.Email, model.Password, model.Name, true);
+
+            auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+            a = await auth.CreateUserWithEmailAndPasswordAsync(model.Email, model.Password, model.Name, true);
             await SendUserInfoToFirestore(model);
-            //return model;
+            return model;
         }
 
 
-        public async Task SendUserInfoToFirestore(UserModel model)  // Metodo para guardar un empleo en Firestore
+        public async Task SendUserInfoToFirestore(RegisterUserModel model)  // Metodo para guardar un empleo en Firestore
         {
           
             try

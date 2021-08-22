@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DATA_L.AI;
 using Newtonsoft.Json;
 using System.Web;
+using DATA_L.Models.Face;
 
 namespace api_nasa_app.Controllers
 {
@@ -17,16 +18,27 @@ namespace api_nasa_app.Controllers
 
         [HttpPost]
         [Route("VerifyFace")]
-        public async Task<ContentResult> VerifyFace(string imgUrl1, string imgUrl2)
+        public async Task<bool> VerifyFace(string imgUrl1, string imgUrl2)
         {
-            FaceDetection FaceDataL = new FaceDetection();
-            var data = await FaceDataL.VerifyFace(imgUrl1, imgUrl2);
+            try
+            {
+                FaceDetection FaceDataL = new FaceDetection();
+                var data = await FaceDataL.VerifyFace(imgUrl1, imgUrl2);
 
-            string JsonData = JsonConvert.SerializeObject(data);
+                //string JsonData = JsonConvert.SerializeObject(data);
 
-            JsonData.Replace(@"\", " ");
+                //JsonData.Replace(@"\", " ");
+                if (data.isIdentical == true)
+                    return true;
+                else if (data.isIdentical == false)
+                    return false;
+            }
+            catch
+            {
+                return false;
+            }
 
-            return new ContentResult { Content = JsonData, ContentType = "application/json" };
+            return false;
 
         }
 

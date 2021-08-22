@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DATA_L.Models.User;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -40,19 +41,29 @@ namespace api_nasa_app.Controllers
 
             [HttpPost]
             [Route("RegisterUser")]
-            public async Task RegisterUser(UserModel user)
+            public async Task<string> RegisterUser(RegisterUserModel user)
             {
+                try
+                {
+                    UserD UserDataL = new UserD();
 
-                UserD UserDataL = new UserD();               
+                    //user.Email = "ramosa@gmail.com";
+                    //user.Name = "hannah";
+                    //user.LastName = "ramos";
+                    //user.Password = "1234567";
+                    //user.Sign = "Tumbs Up";
 
-                //user.Email = "ramosa@gmail.com";
-                //user.Name = "hannah";
-                //user.LastName = "ramos";
-                //user.Password = "1234567";
-                //user.Sign = "Tumbs Up";
 
-                
-               await UserDataL.RegisterAsync(user);
+                    await UserDataL.RegisterAsync(user);
+                return "Funcionó";
+             }
+                catch(Exception e)
+                {
+                return "No funcionó";
+                }
+
+
+            
 
              
 
